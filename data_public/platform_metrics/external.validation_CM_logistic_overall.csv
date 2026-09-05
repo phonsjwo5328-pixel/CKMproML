@@ -1,0 +1,8 @@
+"","CM_ChooseModel_external.validation$overall"
+"Accuracy",0.6755
+"Kappa",0.2986
+"AccuracyLower",0.6584
+"AccuracyUpper",0.6923
+"AccuracyNull",0.7395
+"AccuracyPValue",1
+"McnemarPValue",0

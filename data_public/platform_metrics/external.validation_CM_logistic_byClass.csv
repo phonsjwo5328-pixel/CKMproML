@@ -1,0 +1,12 @@
+"","CM_ChooseModel_external.validation$byClass"
+"Sensitivity",0.6873
+"Specificity",0.6714
+"Pos Pred Value",0.4241
+"Neg Pred Value",0.859
+"Precision",0.4241
+"Recall",0.6873
+"F1",0.5246
+"Prevalence",0.2605
+"Detection Rate",0.179
+"Detection Prevalence",0.4221
+"Balanced Accuracy",0.6793

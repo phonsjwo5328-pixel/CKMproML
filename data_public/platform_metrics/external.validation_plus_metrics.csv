@@ -1,0 +1,14 @@
+"",".metric",".estimator",".estimate","cilower","ciupper","data","model","diycutoff"
+"1","accuracy","binary",0.675494468655716,0.657886356017432,0.690755950385518,"external.validation","logistic",0.5
+"2","kappa","binary",0.298612403209987,0.263683481860111,0.329726309136991,"external.validation","logistic",0.5
+"3","sens","binary",0.687258687258687,0.65548128827673,0.716295802292903,"external.validation","logistic",0.5
+"4","spec","binary",0.671350861287398,0.651974751494213,0.688399240539479,"external.validation","logistic",0.5
+"5","ppv","binary",0.424146147736299,0.398140144403422,0.453466270223421,"external.validation","logistic",0.5
+"6","npv","binary",0.859048723897912,0.841132973588028,0.872738365643653,"external.validation","logistic",0.5
+"7","mcc","binary",,,,"external.validation","logistic",0.5
+"8","j_index","binary",0.358609548546085,0.318169900692842,0.392705978688487,"external.validation","logistic",0.5
+"9","bal_accuracy","binary",0.679304774273043,0.659084950346421,0.696352989344243,"external.validation","logistic",0.5
+"10","f_meas","binary",0.524557956777996,0.496720741323042,0.551890446779088,"external.validation","logistic",0.5
+"11","roc_auc","binary",0.735719594740447,0.714935250100869,0.753856149151875,"external.validation","logistic",0.5
+"12","brier_score","binary",0.227144283296328,0.217051729247246,0.238158727411806,"external.validation","logistic",0.5
+"13","pr_auc","binary",0.517514929691278,0.480420272583734,0.554046519665822,"external.validation","logistic",0.5
