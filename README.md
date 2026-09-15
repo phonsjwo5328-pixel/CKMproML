@@ -2,8 +2,8 @@
 
 Reproducibility materials for:
 
-> **Trustworthy Machine Learning for Early CKM Syndrome Progression Prediction: A SHAP-Based Interpretable Framework with Phenotype Stratification**
-> (submitted to *BioMedInformatics*)
+> **Development of an Interpretable Machine Learning Framework for Cardiovascular–Kidney–Metabolic Syndrome Progression: SHAP-Guided Prediction with Phenotype Stratification**
+> (submitted to *Diabetes, Metabolic Syndrome and Obesity: Targets and Therapy*, Dove Medical Press)
 
 The pipeline derives a 12-predictor logistic regression model for 4-year progression
 from CKM stages 0–2 to 3–4 in CHARLS 2011–2015 (n = 3,874), then applies the **locked
@@ -22,7 +22,7 @@ python/
 data_public/
   nhanes_predictions.csv            # SEQN + outcome + predicted probability (n = 2,983)
   nhanes_calibration_deciles.csv    # Decile calibration table
-  platform_metrics/                 # Archived metric outputs of the development platform
+  platform_metrics/                 # Archived platform metric outputs (incl. an exploratory all-algorithm external comparison not reported in the paper)
 LICENSE (MIT for code)
 ```
 
@@ -33,8 +33,14 @@ this table before comparing your output against the paper.
 
 | Layer | What you need | Expected agreement |
 |---|---|---|
-| **Metrics layer (fully reproducible here)** — external-validation AUROC/PR-AUC/Brier, calibration slope/intercept, decile table, 0.5-threshold classification metrics | Only the files in `data_public/` + R ≥ 4.x with `pROC` | **Exact to machine precision** (≤ 1e-12 in predicted probabilities; identical metrics to 4 dp). The final model is a deterministic Weka Logistic fit; predicted probabilities are provided, so every reported external-validation number in Table 4 / Supplementary Table S8 is recomputable from `nhanes_predictions.csv` alone. |
-| **Modeling layer (data not redistributable)** — refitting the final model, internal test-set predictions, 16-algorithm benchmark | CHARLS microdata (application required) + the FreeStatistics/Weka environment | The final-model numbers (internal AUC 0.7508 etc.) are deterministic given the same pipeline inputs and seed (123), and were verified to machine precision against archived platform predictions. Cross-validated benchmark entries (Supplementary Table S3) may vary by **±0.003** across package versions/platforms; the model-ranking conclusions are unaffected. |
+| **Metrics layer (fully reproducible here)** — external-validation AUROC/PR-AUC/Brier, calibration slope and calibration-in-the-large, decile table, 0.5-threshold classification metrics | Only the files in `data_public/` + R ≥ 4.x with `pROC` | **Exact to machine precision** (≤ 1e-12 in predicted probabilities; identical metrics to 4 dp). The final model is a deterministic Weka Logistic fit; predicted probabilities are provided, so every reported external-validation number in Table 4 / Supplementary Table S8 is recomputable from `nhanes_predictions.csv` alone. |
+| **Modeling layer (data not redistributable)** — refitting the final model, internal test-set predictions, 16-algorithm benchmark | CHARLS microdata (application required) + the FreeStatistics/Weka environment | The final-model numbers (internal AUC 0.7508 etc.) are deterministic given the same pipeline inputs and seed (123), and were verified to machine precision against archived platform predictions. Cross-validated benchmark entries (Supplementary Table S6) may vary by **±0.003** across package versions/platforms; the model-ranking conclusions are unaffected. |
+
+Note on calibration: the paper reports the external calibration slope (0.40)
+and the calibration-in-the-large (−1.37, the intercept with the linear predictor fixed
+as an offset). The script prints both that quantity and the 2-parameter logistic-recalibration
+intercept (alpha = −1.0245), which is not reported in the paper, so that either convention
+can be verified.
 
 If your reproduction differs from the paper, check which layer you are in. Differences
 inside the stated tolerances are expected environment behavior, not errors.
@@ -51,15 +57,15 @@ Expected console output (compare with paper Table 4 / Supplementary Table S8):
 ```
 n = 2983 | events = 777 (26.0%)
 AUC   = 0.7357 (95% CI 0.7150 - 0.7564)   # paper: 0.736 (0.715-0.756)
-PR-AUC = 0.5180
+PR-AUC = 0.5180 (stepwise average precision; platform estimator 0.5175; both round to 0.518 in Figure 11B)
 Brier = 0.2271
-Calibration: intercept = -1.0245, slope = 0.4002
+Calibration: slope = 0.4002 | recalibration intercept (alpha) = -1.0245 | calibration-in-the-large = -1.3746   # paper: slope 0.40, intercept -1.37 (calibration-in-the-large)
 At threshold 0.5: sens = 0.6873  spec = 0.6714  ppv = 0.4241  npv = 0.8590  acc = 0.6755
 ```
 
 All reported external-validation point estimates (Table 4 / Supplementary Table S8)
 are recomputed from `data_public/nhanes_predictions.csv` alone; the script ends with
-an automated cross-check (9/9 metrics agree to 4 dp).
+an automated cross-check (9/9 reported metrics agree with the paper to the reported precision).
 
 ## Rebuilding the NHANES dataset from CDC source files
 
